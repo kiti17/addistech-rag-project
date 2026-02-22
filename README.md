@@ -34,31 +34,39 @@ This creates a local persistent DB in `./chroma_db/`.
 
 ### 3) Run the web app
 ```bash
-uvicorn app.main:app --reload --port 8000
+python -m uvicorn app.main:app --reload --port 8010
 ```
 
 Open:
-- http://127.0.0.1:8000/  (chat UI)
-- http://127.0.0.1:8000/health
-- POST http://127.0.0.1:8000/chat
+http://127.0.0.1:8010/ (chat UI)
+http://127.0.0.1:8010/health
+http://127.0.0.1:8010/debug/llm
 
 ## LLM Configuration (Optional but recommended)
 If you set `LLM_API_KEY`, the app will use an OpenAI-compatible Chat Completions API.
 
 Environment variables:
-- `LLM_API_KEY` (required to enable LLM calls)
-- `LLM_BASE_URL` (default: https://api.openai.com/v1)
-- `LLM_MODEL` (default: gpt-4o-mini)
-- `TOP_K` (default: 4)
+LLM_API_KEY (required to enable LLM calls)
+LLM_BASE_URL (default: https://openrouter.ai/api/v1)
+LLM_MODEL (default: openai/gpt-4o-mini)
+TOP_K (default: 4)
 
-Examples:
-
+You can configure them using a .env file in the project root:
 ### OpenRouter
 ```bash
+LLM_API_KEY=your_api_key_here
+LLM_BASE_URL=https://openrouter.ai/api/v1
+LLM_MODEL=openai/gpt-4o-mini
+TOP_K=4
+```
+Example: OpenRouter
+
 export LLM_API_KEY="..."
 export LLM_BASE_URL="https://openrouter.ai/api/v1"
 export LLM_MODEL="openai/gpt-4o-mini"
-```
+
+OpenRouter requires purchases credits.
+If creadits are missing, /chat will run HTTP 402 (surfaced as 500)
 
 ### Groq (OpenAI-compatible)
 ```bash
