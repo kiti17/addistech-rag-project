@@ -19,6 +19,6 @@ jobs:
       - name: Import check
         run: |
           python -c "import app; import app.main"
-      - name: Ingest smoke test
+      - name: Run ingest
         run: |
-          python scripts/ingest.py
+          PYTHONPATH=. python scripts/ingest.py
